@@ -1,0 +1,15 @@
+scchart TrafficLight "Traffic Light Simulator"{
+  
+  region{
+    clock x = 0;
+    
+    initial state Red
+    if x > 10 do x = 0 go to Green  // after 5 time untis Green 
+    
+    state Yellow
+    if x > 3 do x = 0 go to Red
+    
+    state Green
+    if x >5 do x = 0 go to Yellow
+  }
+}

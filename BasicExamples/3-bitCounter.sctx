@@ -1,0 +1,37 @@
+scchart Counter "3 bit Counter"{
+  input signal a, start
+  signal end
+  
+  initial state notCounting
+  if start go to Counting
+  
+  state Counting{
+    signal b,c
+    
+    region C{
+      initial state C0
+      if c go to C1
+      
+      state C1
+      if c do end go to C0
+    }
+    
+    region B{
+      initial state B0
+      if b go to B1
+      
+      state B1
+      if b do c go to B0
+    }
+    
+    region A{
+      initial state A0
+      if a go to A1
+      
+      state A1
+      if a do b go to A0
+    }
+    
+  } if end go to notCounting
+  
+}

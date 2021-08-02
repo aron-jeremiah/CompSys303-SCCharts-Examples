@@ -1,0 +1,18 @@
+@VHLayout
+scchart xy "x-y Causality Example"{
+  input signal x, y
+  region {
+    
+    region A{
+      initial state A0
+      if x do y go to A1
+      final state A1
+    }
+    
+    region B{
+      initial state B0
+      if pre(y) do x go to B1
+      final state B1
+    }
+  }
+}
