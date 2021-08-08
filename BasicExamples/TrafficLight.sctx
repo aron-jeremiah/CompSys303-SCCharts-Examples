@@ -1,0 +1,15 @@
+scchart TrafficLight {
+input signal pedestrian
+output signal sigG, sigY, sigR
+clock x
+  initial state red
+  if x >= 60 do x= 0 ; sigG go to green
+  state green 
+  if pedestrian && x < 60 go to pending
+  if pedestrian && x >= 60 do x =0 go to yellow
+  state yellow
+  if x >=5 do x= 0 ; sigR go to red
+  state pending
+  if x >= 60 do x= 0 ; sigY go to yellow
+  
+}

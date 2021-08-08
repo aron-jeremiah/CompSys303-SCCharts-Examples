@@ -1,0 +1,29 @@
+scchart ABRO {
+  input signal A,B,R, R1
+  output signal O
+  
+  initial state ABO {
+
+    
+    initial state WaitAB {
+      region {
+        initial state wA
+        if A go to dA 
+  
+        final state dA
+      }
+      
+      region {
+        initial state wB
+        if B go to dB
+  
+        final state dB
+      }
+    }
+    do O join to done
+
+    final state done
+  }
+  if R go to ABO 
+}
+  
