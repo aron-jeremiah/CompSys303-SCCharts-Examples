@@ -1,0 +1,34 @@
+#hostcode-c "#include <stdio.h>"
+
+scchart HWABRO "Hello World ABRO"{
+  input signal A, B, R
+  output signal O
+  
+  
+  initial state ABRO{
+    initial state awaitAB{
+        region A{
+        initial state wA
+        if A go to dA
+        final state dA{
+          entry do `printf("Entered A state\n")`
+        }
+      }  
+      
+      region B{
+        initial state wB
+        if B go to dB
+        final state dB{
+          entry do `printf("Entered B state\n")`
+        }
+      }
+    }
+    do O join to done
+    
+    final state done{
+      entry do `printf("done!!\n")`
+    }
+  }
+  if R abort to ABRO
+    
+}
