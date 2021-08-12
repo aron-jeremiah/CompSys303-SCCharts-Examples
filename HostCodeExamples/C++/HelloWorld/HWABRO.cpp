@@ -67,8 +67,8 @@ void tick(TickData* d) {
   d->_pg23 = d->_g23;
   d->_GO = 0;
 
+  // Reset
   d->A = 0;
   d->B = 0;
   d->R = 0;
-  d->O = 0;
 }
