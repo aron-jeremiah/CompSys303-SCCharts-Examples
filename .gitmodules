@@ -1,3 +1,6 @@
 [submodule "Auto-Testing-Examples/CDefine-Example/googletest"]
 	path = Auto-Testing-Examples/CDefine-Example/googletest
 	url = https://github.com/google/googletest
+[submodule "Auto-Testing-Examples/ABRO-Example/googletest"]
+	path = Auto-Testing-Examples/ABRO-Example/googletest
+	url = https://github.com/google/googletest

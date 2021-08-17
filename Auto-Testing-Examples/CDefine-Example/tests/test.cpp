@@ -4,6 +4,7 @@
 TEST(ExampleTestA, Timing){
     TickData data;
     reset(&data);
+    tick(&data);
     data.deltaT = 0;
 
     tick(&data);
