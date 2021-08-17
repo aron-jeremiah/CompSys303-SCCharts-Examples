@@ -1,0 +1,19 @@
+#resource "timing.h"
+#hostcode-c "#include \"timing.h\""
+
+@ClocksUseSD 
+scchart SCChart {
+output signal pace, n_pace
+clock c
+host "int" AVI_Constraint = `AVI`
+
+  region {
+    initial state A{
+      during do n_pace
+    }
+    if c >= AVI_Constraint go to B
+    final state B{
+      entry do pace
+    }
+  }
+}
