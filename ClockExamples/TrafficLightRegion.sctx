@@ -15,7 +15,7 @@ initial state top{
 
   }
   region green{
-    clock x=70
+    clock x=0
     output signal sigG
     initial state idle 
     if G do x=0; sigG go to active
@@ -29,7 +29,7 @@ initial state top{
     if  x >= 60 do Y go to idle
   }
   region yellow{
-    clock x = 70
+    clock x = 0
     output signal sigY
     initial state idle
     if Y do x=0; sigY go to active
