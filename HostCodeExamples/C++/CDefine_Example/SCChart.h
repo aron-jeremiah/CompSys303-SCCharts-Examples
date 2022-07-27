@@ -6,7 +6,10 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  */
-
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 #include "timing.h"
 
 
@@ -52,5 +55,8 @@ typedef struct {
 void reset(TickData* d);
 void logic(TickData* d);
 void tick(TickData* d);
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif /* !SCCHART_H */

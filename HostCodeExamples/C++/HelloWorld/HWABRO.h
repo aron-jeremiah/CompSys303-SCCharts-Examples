@@ -6,10 +6,13 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  */
-
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 #include <stdio.h>
 
-
+//C code goes here
 typedef struct {
   char A;
   char B;
@@ -50,5 +53,10 @@ typedef struct {
 void reset(TickData* d);
 void logic(TickData* d);
 void tick(TickData* d);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
 
 #endif /* !HWABRO_H */

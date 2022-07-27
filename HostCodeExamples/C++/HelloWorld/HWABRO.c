@@ -4,9 +4,6 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  */
-
-#include <stdio.h>
-
 #include "HWABRO.h"
 
 void logic(TickData* d) {
