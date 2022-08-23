@@ -1,0 +1,47 @@
+scchart NewSCChart {
+  input signal ResetStart, ResetNext, a, init, goback
+  output signal O
+  initial state top{
+    
+  } 
+  if init go to start
+  state start {
+    signal b, c, d
+    region {
+      initial state A 
+        if a do b go to A1
+      state A1
+      if a do c go to A1
+    }
+    
+    region {
+      initial state B
+        if b do c go to C
+      state C
+        if c do d go to C  
+      
+    }
+  }
+//  immediate if ResetStartabort to start
+
+
+//  if ResetStart abort to start
+  if ResetStart go to start
+  if c go to next
+  state next {
+    signal b, c, d
+    region {
+      initial state A 
+        if a do b go to A 
+      
+    }
+    region {
+      initial state B
+        if pre(pre(b)) do a; c go to B
+      
+    }
+  }
+  if ResetNext abort to next
+  if c go to start
+}
+

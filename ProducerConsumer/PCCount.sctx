@@ -1,0 +1,38 @@
+
+
+scchart EPC "Simple Producer Consumer" {
+
+   input signal P, C, StartP, StartC
+   output signal Produced, Consumed
+   output int count = 0
+   //output int buffer[10]
+   
+   //output signal A,B,C
+  
+  region Producer{
+    clock t
+    int i = 0
+    
+    
+    initial state idle
+    if StartP go to produce
+    state produce {
+      entry if count < 10 do  Produced; count++
+      
+    }  if t >= 20 do t = 0 go to produce
+  }
+  
+  region Consumer {
+    clock t
+    int i = 0
+    
+
+   initial state idle
+     if StartC && !StartP go to consume
+      state consume{
+       entry if pre(count) > 0 do Consumed; count--
+      } if t >= 10 do t = 0 go to consume
+     }
+  
+}
+  

@@ -1,5 +1,5 @@
 scchart ABRO {
-  input bool A,B,R
+  input bool A,B,B1, R
   output bool O
   
   initial state ABO {

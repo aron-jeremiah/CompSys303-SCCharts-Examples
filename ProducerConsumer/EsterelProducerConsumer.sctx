@@ -1,0 +1,35 @@
+#resource "ProducerConsumer.h"
+#resource "ProducerConsumer.c"
+#hostcode-c "#include \"ProducerConsumer.h\""
+
+scchart EPC "Esterel Producer Consumer" {
+   extern @C "producer" producer
+   extern @C "consumer" consumer
+   
+   output int count = 0
+   output int buffer[10]
+   
+   output signal A,B,C
+  
+  region Producer{
+    clock t
+    int i = 0
+    
+    initial state idle
+    if t > 10 do A go to active
+    state active{
+      entry do {
+        producer(buffer, &count, &i)
+      }
+    } if B do A go to active
+  }
+  
+  region Consumer {
+    int i = 0
+    
+    initial state active {
+      entry do consumer(buffer, &count, &i)
+    } if pre(A) do B go to active
+  }
+  
+}

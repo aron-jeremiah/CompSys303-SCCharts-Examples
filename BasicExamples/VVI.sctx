@@ -1,0 +1,64 @@
+@HVLayout
+scchart VVIPacemaker {
+  input bool VSense, LRITO, VRPTO
+  output bool VPace
+
+  initial state top {
+    bool LRI_start, LRI_ex, LRI_stop
+    bool VRP_start, VRP_stop, VRP_ex
+
+    region LRI {
+      initial state init
+      if VSense go to commit1
+
+      connector state commit1
+      immediate do LRI_start = true go to waitVRP
+
+      state waitVRP
+      if VRP_ex go to waitLRI
+
+      state waitLRI
+      if VSense go to commit2
+      if LRI_ex go to comit3
+
+      connector state commit2
+      immediate do LRI_stop = true; VPace=false go to commit1
+
+      connector state comit3
+      immediate do VPace = true go to commit1
+    }
+
+    region LRI_timer {
+      initial state idle
+      if LRI_start go to timer
+
+      state timer
+      if LRI_stop go to idle
+      if LRITO do LRI_ex = true go to idle
+    }
+
+    region VRP {
+      initial state idle
+      if VSense go to comit1
+      if VPace go to comit1
+
+      connector state comit1
+      immediate do VRP_start=true go to waitVRP
+
+      state waitVRP
+      if VRP_ex go to idle
+      if VSense go to comit2
+
+      connector state comit2
+      immediate go to waitVRP
+    }
+
+    region VRP_timer {
+      initial state idle
+      if VRP_start go to timer
+
+      state timer
+      if VRPTO do VRP_ex=true go to idle
+    }
+  }
+}

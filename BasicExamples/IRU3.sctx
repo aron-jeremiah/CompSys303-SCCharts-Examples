@@ -1,0 +1,32 @@
+scchart IRU3 {
+input signal a
+output signal b
+
+output float x = 0
+output float y = 0
+
+  region one {
+
+    initial state A //{entry do x =15 label "Initx"}
+    if a  do x += 10.5 go to B
+    final state B
+    
+  }
+  
+  region two {
+    
+    initial state C //{entry do x =15 label "Initx"}
+    if a  do x += 20.8; x+=20; b go to D
+    
+    final state D
+    
+  }
+  
+  region three {
+    
+    initial state E //{entry do x =15 label "Initx"}
+    if b  do  y= x+5 go to F
+    final state F
+    
+  }
+}

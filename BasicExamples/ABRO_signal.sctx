@@ -1,5 +1,5 @@
-scchart ABRO {
-  input signal A,B,R, R1
+scchart ACBRO {
+  input signal A,B, C, R
   output signal O
   
   initial state ABO {
@@ -19,11 +19,19 @@ scchart ABRO {
   
         final state dB
       }
+      
+      region {
+        
+        initial state wC
+        if C go to dC
+  
+        final state dC
+      }
     }
     do O join to done
 
     final state done
   }
-  if R go to ABO 
+  if R abort to ABO 
 }
   
