@@ -13,22 +13,23 @@ scchart EPC "Esterel Producer Consumer" {
   
   region Producer{
     clock t
-    int i = 0
+    int index = 0
     
     initial state idle
     if t > 10 do A go to active
     state active{
       entry do {
-        producer(buffer, &count, &i)
+        producer(buffer, &count, &index)
       }
     } if B do A go to active
   }
   
   region Consumer {
-    int i = 0
+    clock t
+    int index = 0
     
     initial state active {
-      entry do consumer(buffer, &count, &i)
+      entry do consumer(buffer, &count, &index)
     } if pre(A) do B go to active
   }
   
