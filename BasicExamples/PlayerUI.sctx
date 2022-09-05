@@ -1,0 +1,32 @@
+scchart MPUI {
+	input signal pure play, stop, lock
+	output signal pure codeForPlay, codeForStop
+
+	initial state init {
+		signal pure change
+
+		region play {
+			initial state init
+			if play do change go to cfp
+
+			state cfp {
+
+				initial state cfpInit
+				do codeForPlay go to cfpInit
+			}
+			if change go to init
+		}
+
+		region stop {
+			initial state init
+			if stop do change go to cfs
+
+			state cfs {
+
+				initial state cfsInit
+				do codeForStop go to cfsInit
+			}
+			if change go to init
+		}
+	}
+}

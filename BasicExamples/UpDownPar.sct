@@ -1,0 +1,70 @@
+scchart UpDownPar {
+
+  input signal second, start, abort;
+  output signal done;
+  //output signal B, C, end;
+  
+  region main:
+  signal end, end1;
+    
+    initial state NotCounting{
+      
+    }
+    --> Counting with start;
+    
+    state Counting{
+         
+         initial state CountingUp{
+          signal B;
+          region bit1:
+          initial state A0
+            --> A1 with  second;
+          state A1
+            -->A0 with second / B;
+      
+          region bit2:
+          initial state B0
+            --> B1 with B;
+          state B1
+            -->B0 with B / end1;
+      
+          /*region bit3: 
+          initial state C0
+            --> C1 with C;
+          state C1
+            -->C0 with C /end1;*/   
+       }
+       --> CountingDown with end1;
+      //final state UpDone;
+    
+         state CountingDown{
+          signal B2;
+          region bit1:
+          //initial state A_delay --> A1 with pre(end1);
+          initial state A1 --> A0 with second;
+          state A0
+            -->A1 with second / B2;
+      
+          region bit2:
+          initial state B1
+            --> B0 with B2;
+          state B0
+            -->B1 with B2 /end;
+      
+          /*region bit3: 
+          initial state C1
+            --> C0 with C2;
+          state C0
+            -->C1 with C2 /end; */  
+       }
+       --> countDone with end;
+       final state countDone;
+       //--> final state countDone with end;
+       
+    
+    }
+    o-> NotCounting with abort
+    //--> NotCounting with end;
+    >-> NotCounting with /done;
+ 
+ }

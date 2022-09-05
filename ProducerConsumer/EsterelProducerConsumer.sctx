@@ -1,6 +1,7 @@
 #resource "ProducerConsumer.h"
 #resource "ProducerConsumer.c"
 #hostcode-c "#include \"ProducerConsumer.h\""
+@ClocksUseSD
 
 scchart EPC "Esterel Producer Consumer" {
    extern @C "producer" producer
@@ -16,12 +17,12 @@ scchart EPC "Esterel Producer Consumer" {
     int index = 0
     
     initial state idle
-    if t > 10 do A go to active
+    if t > 10 do A; t=0 go to active
     state active{
       entry do {
         producer(buffer, &count, &index)
       }
-    } if B do A go to active
+    } if t >= 10 do A go to active
   }
   
   region Consumer {
@@ -30,7 +31,7 @@ scchart EPC "Esterel Producer Consumer" {
     
     initial state active {
       entry do consumer(buffer, &count, &index)
-    } if pre(A) do B go to active
+    } if t >= 20 do B go to active
   }
   
 }

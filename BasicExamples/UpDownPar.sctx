@@ -1,0 +1,60 @@
+scchart UpDownPar {
+	input signal pure second, start, astrong
+	output signal pure done
+
+	region main {
+		signal pure end, end1
+
+		initial state NotCounting
+		if start go to Counting
+
+		state Counting {
+
+			initial state CountingUp {
+				signal pure B
+
+				region bit1 {
+					initial state A0
+					if second go to A1
+
+					state A1
+					if second do B go to A0
+				}
+
+				region bit2 {
+					initial state B0
+					if B go to B1
+
+					state B1
+					if B do end1 go to B0
+				}
+			}
+			if end1 go to CountingDown
+
+			state CountingDown {
+				signal pure B2
+
+				region bit1 {
+					initial state A1
+					if second go to A0
+
+					state A0
+					if second do B2 go to A1
+				}
+
+				region bit2 {
+					initial state B1
+					if B2 go to B0
+
+					state B0
+					if B2 do end go to B1
+				}
+			}
+			if end go to countDone
+
+			final state countDone
+		}
+		if astrong abort to NotCounting
+		do done join to NotCounting
+	}
+}
