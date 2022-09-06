@@ -1,52 +1,64 @@
-
-@ClocksUseSD
 scchart UpDownPar {
-  input signal pure first, second, start, R
-  output signal pure done
+  input signal first, second, start, R
+  output signal done
+  
+  
 
   region main {
-    signal pure end1, end2
+    
 
     initial state NotCounting
     if start go to Counting
 
     state Counting {
+      
+      
       region CountingUp {
-        signal pure B
-        clock c1
+        signal end
+        
         initial state First{
+          signal B
+        
+          
           region bit1 {
+            clock c1
             initial state A0
-            if first && c1 > 10 do c1=0 go to A1
+            if first do c1=0 go to A1
       
             state A1
-            if first && c1 > 10 do B; c1=0 go to A0
+            if c1 >= 40 do B go to A0
           }
       
           region bit2 {
             initial state B0
             if B go to B1
-      
+   
             state B1
-            if B do end1 go to B0
+            if B do end go to B2
+            
+            state B2
+            }
           }
-        }
-        if end1 go to FirstDone
+        
+        if pre(end) go to FirstDone
         final state FirstDone
         
        }
        
        region CountingDown {
-        signal pure B
-        clock c2
+        signal end2
+        
+        
         
         initial state Second{
+          signal B
           region bit1 {
+            clock c2
             initial state A1
-            if second && c2 >= 18 do c2 =0 go to A0
+            if second && c2>= 10 do c2 = 0go to A0
       
             state A0
-            if second && c2 >= 18 do B ; c2=0 go to A1
+            if c2 >= 30 do B go to A1
           }
       
           region bit2 {
@@ -57,7 +69,7 @@ scchart UpDownPar {
             if B do end2 go to B1
           }
         }
-        if end2 go to SecondDone
+        if pre(end2) go to SecondDone
         final state SecondDone
         
        }
