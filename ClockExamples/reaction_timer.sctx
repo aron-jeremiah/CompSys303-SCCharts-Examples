@@ -1,0 +1,22 @@
+scchart ReactionTimer {
+	input signal start, done
+	output signal led1, led2
+
+	clock t
+	initial state idle
+	if start do t = 0 go to active
+
+	state active {
+		during do led1
+	}
+	if done go to idle
+	if t >= 50 go to timeout
+
+
+	state timeout {
+		during do led2
+	}
+	if done go to idle
+
+
+}
