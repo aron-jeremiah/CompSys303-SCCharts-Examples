@@ -1,0 +1,29 @@
+scchart ReactionTimerExternal {
+  input signal start, done, HMS, continue1
+  output signal led1, led2
+  output signal int RC
+   int count =0
+   
+   region timerReactionExternal{
+    initial state idle
+    if start do count =0 go to active
+    state active{
+      entry do  led1
+      during do led1
+    }
+    
+    if count>=3 && HMS do count ++;  RC(count*100) go to timeout
+    
+    if done && HMS do count++; RC(count*100) go to idle
+    if done do RC(count*100) go to idle
+    if HMS do count++ go to active
+    state timeout{
+      entry do led2
+      during do led2
+      exit 
+    }
+     if continue1  go to idle
+       
+  }
+  
+  }

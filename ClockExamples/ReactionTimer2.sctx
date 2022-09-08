@@ -1,0 +1,52 @@
+scchart ReactionTimerInternalExternal {
+	input signal start, done, HMS, continue1
+	output signal led1a, led2a, led1b, led2b 
+	output signal int RC1, RC2
+	 int count =0
+	 
+	 region timedReactionExternal{
+    initial state idle
+    if start do count =0 go to active
+    state active{
+      entry do  led1a
+      during do led1a
+    }
+    
+    if count>=3 && HMS do count ++;  RC1(count*100) go to timeout
+    if done && HMS do count++; RC1(count*100) go to idle
+    if done do RC1(count*100) go to idle
+    if HMS do count++ go to active
+    state timeout{
+      entry do led2a
+      during do led2a
+      exit 
+    }
+     if continue1  go to idle
+       
+  }
+
+  region timedReactionClock {
+  	clock t
+  	initial state idle
+  	if start do t = 0 go to active
+  
+  	state active {
+  	  entry do led1a
+  		during do led1a
+  	}
+  	if t >= 300 do RC2(t) go to timeout
+  	if done do RC2(t) go to idle
+  	
+  
+  
+  	state timeout {
+  	  entry do led2b
+  		during do led2b
+  	}
+  	if continue1 go to idle
+  }
+  
+  
+  
+
+}
