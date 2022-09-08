@@ -62,6 +62,7 @@ scchart UpDownPar {
       }
       
       if R abort to NotCounting
+      if !R && !start go to NotCounting
       do done join to NotCounting
       
     }
